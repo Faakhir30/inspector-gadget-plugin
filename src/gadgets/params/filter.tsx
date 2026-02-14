@@ -33,7 +33,7 @@ const FilterComponent = ({ param, config, gadgetConfig }) => {
     console.log('Gadget info:', gadgetInfo);
     if (!gadgetInfo) return [];
     const tmpFields = [];
-    Object.values(gadgetInfo).forEach(ds => {
+    Object.values(gadgetInfo).forEach((ds: { name: string; fields: any[] }) => {
       ds.fields.forEach(f => {
         tmpFields.push({ ds: ds.name, ...f });
       });

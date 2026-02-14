@@ -16,7 +16,7 @@ const SortingFilter = ({ param, config, gadgetConfig }) => {
     if (!gadgetInfo) return [];
 
     const tmpFields = [];
-    Object.values(gadgetInfo).forEach(ds => {
+    Object.values(gadgetInfo).forEach((ds: { name: string; fields: any[] }) => {
       ds.fields.forEach(f => {
         tmpFields.push({ ds: ds.name, field: f.fullName, display: `${ds.name}.${f.fullName}` });
       });
@@ -30,7 +30,7 @@ const SortingFilter = ({ param, config, gadgetConfig }) => {
       dataSources[f.field.ds] = [...(dataSources[f.field.ds] || []), f];
     });
     const res = Object.entries(dataSources)
-      .map(([d, fields]) => {
+      .map(([d, fields]: [string, any[]]) => {
         return `${d}:${fields.map(f => `${f.sorting}${f.field.field}`).join(',')}`;
       })
       .join(';');

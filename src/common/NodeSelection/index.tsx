@@ -1,5 +1,5 @@
 import { Loader } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import K8s from '@kinvolk/headlamp-plugin/lib/K8s';
+import K8s from '@kinvolk/headlamp-plugin/lib/k8s';
 import {
   Box,
   Checkbox,
@@ -10,6 +10,7 @@ import {
   MenuProps as MUIMenuProps,
   OutlinedInput,
   Select,
+  SelectChangeEvent,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -60,8 +61,8 @@ interface NodeSelectionProps {
 }
 
 export function NodeSelection(props: NodeSelectionProps) {
-  const [nodes] = K8s.ResourceClasses.Node.useList() as [Node[]];
-  const [pods] = K8s.ResourceClasses.Pod.useList() as [Pod[]];
+  const [nodes] = K8s.ResourceClasses.Node.useList() as unknown as [Node[]];
+  const [pods] = K8s.ResourceClasses.Pod.useList() as unknown as [Pod[]];
   const [finalNodes, setFinalNodes] = useState<Node[]>(null);
   const {
     setPodsSelected,
@@ -157,11 +158,11 @@ export function NodeSelection(props: NodeSelectionProps) {
     return <Loader title="Loading" />;
   }
 
-  const handleChange = (event: { target: { value: string[] } }) => {
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
     // Skip handling changes if selection is disabled
     if (selectionDisabled && !isInstantRun) return;
 
-    const { value } = event.target;
+    const { value } = event.target as { value: string[] };
     setNodesSelected(value);
 
     const podsInterestedIn = value.reduce<Pod[]>((acc, nodeName) => {
@@ -181,6 +182,7 @@ export function NodeSelection(props: NodeSelectionProps) {
         width: 250,
       },
     },
+    open: true,
   };
 
   return (

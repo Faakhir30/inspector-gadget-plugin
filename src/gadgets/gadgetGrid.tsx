@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { Loader } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import K8s from '@kinvolk/headlamp-plugin/lib/K8s';
+import K8s from '@kinvolk/headlamp-plugin/lib/k8s';
 import { getCluster, getClusterPrefixedPath } from '@kinvolk/headlamp-plugin/lib/Utils';
 import {
   Box,
@@ -165,7 +165,7 @@ export function GadgetCardEmbedWrapper({ gadget, embedDialogOpen, onClose, resou
               height: '100%',
             }}
           >
-            <Loader />
+            <Loader title="" />
           </Box>
         </Box>
       </>
@@ -227,6 +227,7 @@ export function GadgetCardEmbedWrapper({ gadget, embedDialogOpen, onClose, resou
         <Box sx={{ overflow: 'auto', flexGrow: 1 }}>
           {gadgetInfo ? (
             <GadgetCreationStepper
+              // @ts-expect-error
               ig={ig}
               imageName={gadget?.display_name.split(' ').join('_')}
               enableEmbed
@@ -234,7 +235,7 @@ export function GadgetCardEmbedWrapper({ gadget, embedDialogOpen, onClose, resou
               resource={resource}
             />
           ) : (
-            <Loader />
+            <Loader title="Loading Gadget Info" />
           )}
         </Box>
       </Box>
@@ -674,6 +675,7 @@ function Gadget({ gadget, nodes, pods, resource }) {
       <CreateGadgetInstance
         gadgetInfo={gadgetInfo}
         resource={resource}
+        // @ts-expect-error
         ig={ig}
         imageName={imageName}
       />

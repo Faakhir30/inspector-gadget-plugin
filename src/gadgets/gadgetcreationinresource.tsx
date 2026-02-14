@@ -43,15 +43,10 @@ export function GadgetCreation({ resource, open, setOpen }) {
             <GadgetGrid
               resource={resource}
               gadgets={gadgets}
-              enableEmbed={false}
-              onViewSelect={() => {
-                // setOpen(true);
-              }}
               onEmbedClick={gadget => {
                 setSelectedGadget(gadget);
                 setEmbedDialogOpen(true);
               }}
-              callbackRunGadget={() => {}}
             />
             {embedDialogOpen && (
               <GadgetCardEmbedWrapper

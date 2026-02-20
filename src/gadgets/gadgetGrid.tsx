@@ -358,10 +358,13 @@ const GadgetCard = ({ gadget, onEmbedClick, resource = null }) => {
 const StepContent = ({ activeStep, setActiveStep, resource, gadgetInfo, imageName }) => {
   const [currentView, setCurrentView] = useState('');
   const [filters, setFilters] = useState({});
+  const isNamespaceResoruce = resource?.jsonData?.kind === 'Namespace';
   const commonProps = {
     config: gadgetInfo,
-    namespace: resource?.jsonData?.metadata?.namespace,
-    pod: resource?.jsonData?.metadata?.name,
+    namespace: isNamespaceResoruce
+      ? resource?.jsonData?.metadata?.name
+      : resource?.jsonData?.metadata?.namespace,
+    pod: resource?.jsonData?.kind === 'Pod' ? resource?.jsonData?.metadata?.name : undefined,
   };
   switch (activeStep) {
     case 0:

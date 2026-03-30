@@ -18,6 +18,7 @@ import { IGNotFound } from './common/NotFound';
 import { GadgetCreation } from './gadgets/gadgetcreationinresource';
 import { GadgetDetails } from './gadgets/gadgetDetails';
 import { isIGPod } from './gadgets/helper';
+import BpfStatsPage from './gadgets/bpfStats';
 import GadgetList from './gadgets/list';
 import RunningGadgetsForResource from './gadgets/resourcegadgets';
 
@@ -35,12 +36,28 @@ registerSidebarEntry({
   label: 'Gadgets',
 });
 
+registerSidebarEntry({
+  name: 'gadget-bpf-stats',
+  icon: 'mdi:chart-timeline-variant',
+  url: '/gadgets/bpf-stats',
+  parent: null,
+  label: 'BPF stats',
+});
+
 registerRoute({
   path: '/gadgets',
   component: GadgetList,
   exact: true,
   sidebar: 'gadgets',
   name: 'gadgets',
+});
+
+registerRoute({
+  path: '/gadgets/bpf-stats',
+  component: BpfStatsPage,
+  exact: true,
+  sidebar: 'gadget-bpf-stats',
+  name: 'gadget-bpf-stats',
 });
 
 registerRoute({

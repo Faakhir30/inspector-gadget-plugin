@@ -127,6 +127,7 @@ export function GadgetWithDataSource(props: GadgetWithDataSourceProps) {
         );
       });
     }
+    console.log(fields, gadgetData)
 
     return (
       fields && <Table columns={fields} data={gadgetData[dataSourceID] || []} loading={loading} />

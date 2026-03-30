@@ -1,7 +1,7 @@
 import { Link } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import React from 'react';
 import { HEADLAMP_KEY, HEADLAMP_VALUE, IS_METRIC } from '../common/helpers';
-import { getProperty } from './helper';
+import { getGadgetFieldValue } from './helper';
 
 export const MAX_DATA_LIMIT = 20000;
 
@@ -13,7 +13,7 @@ export const processDataColumn = (payload: any, column: string): React.ReactNode
     return null;
   }
 
-  const value = getProperty(payload, column);
+  const value = getGadgetFieldValue(payload, column);
 
   switch (column) {
     case 'k8s.containerName':
@@ -33,8 +33,15 @@ export const processDataColumn = (payload: any, column: string): React.ReactNode
       ) : (
         value
       );
-    default:
-      return JSON.stringify(value).replace(/['"]+/g, '');
+    default: {
+      if (value === undefined || value === null) {
+        return '';
+      }
+      if (typeof value === 'object') {
+        return JSON.stringify(value).replace(/['"]+/g, '');
+      }
+      return String(value);
+    }
   }
 };
 
